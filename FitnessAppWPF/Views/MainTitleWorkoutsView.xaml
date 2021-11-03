@@ -1,0 +1,44 @@
+﻿<Window x:Class="FitnessAppWPF.Views.MainTitleWorkoutsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:uc="clr-namespace:FitnessAppWPF.Controls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FitnessAppWPF.Views" 
+        xmlns:ViewModel="clr-namespace:FitnessAppWPF.ViewModels"
+        mc:Ignorable="d"
+        Title="Fitness App" Height="600" Width="800">
+    <Window.DataContext>
+        <ViewModel:MainTitleWorkoutsViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="0,10,0,0">
+                <Button Content="+" Command="{Binding AddExerciseCmd}" Margin="0,10,0,0"/>
+
+            </StackPanel>
+
+        </Grid>
+
+        <TextBlock Grid.Row="0" Text="Workouts" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <uc:NavigationBar Grid.Row="2" />
+
+    </Grid>
+</Window>
