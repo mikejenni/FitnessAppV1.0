@@ -1,8 +1,5 @@
-﻿using FitnessAppWPF.Commands;
-using FitnessAppWPF.Model;
+﻿using FitnessAppWPF.Model;
 using FitnessAppWPF.Stores;
-using MVVMEssentials.Commands;
-using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,32 +8,36 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
 namespace FitnessAppWPF.ViewModels
 {
-    public class MainTitleWorkoutsViewModel : ViewModelBase
+    public class WorkoutListingViewModel : ViewModelBase
     {
         private readonly WorkoutStore _workoutStore;
         private readonly ObservableCollection<WorkoutViewModel> _workouts;
 
         public IEnumerable<WorkoutViewModel> Workouts => _workouts; //{ get { return _workouts; } }
         public bool HasWorkout => _workouts.Count > 0;
-        public ICommand NavigateWorkoutBuilderCommand { get; }
-        public ICommand CreateWorkoutCommand { get; }
-        public MainTitleWorkoutsViewModel(INavigationService workoutbuilderNavigationService, WorkoutStore workoutStore)
+
+
+        public WorkoutListingViewModel(WorkoutStore workoutStore)
         {
             _workoutStore = workoutStore;
-            NavigateWorkoutBuilderCommand = new NavigateCommand(workoutbuilderNavigationService);
-            CreateWorkoutCommand = new CreateWorkoutCommand(this, workoutStore);
-            _workouts = new ObservableCollection<WorkoutViewModel>();
 
+            _workouts = new ObservableCollection<WorkoutViewModel>();
             _workouts.CollectionChanged += Workouts_CollectionChanged;
 
             _workoutStore.WorkoutCreated += WorkoutStore_WorkoutCreated;
+
+
         }
 
+        public static WorkoutListingViewModel LoadViewModel(WorkoutStore workoutStore)
+        {
+            WorkoutListingViewModel viewModel = new WorkoutListingViewModel(workoutStore);
+
+            return viewModel;
+        }
 
         private void WorkoutStore_WorkoutCreated(Workout workout)
         {
@@ -49,7 +50,6 @@ namespace FitnessAppWPF.ViewModels
         {
             OnPropertyChanged(nameof(HasWorkout));
         }
-
 
 
     }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FitnessAppWPF.Views
+namespace FitnessAppWPF.Controls
 {
     /// <summary>
-    /// Interaction logic for WorkoutBuilderView.xaml
+    /// Interaction logic for Layout.xaml
     /// </summary>
-    public partial class WorkoutBuilderView : UserControl
+    public partial class Layout : UserControl
     {
-        public WorkoutBuilderView()
+        public Layout()
         {
             InitializeComponent();
         }

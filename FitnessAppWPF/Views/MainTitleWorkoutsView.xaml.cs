@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FitnessAppWPF.Views
@@ -17,7 +18,7 @@ namespace FitnessAppWPF.Views
     /// <summary>
     /// Interaction logic for MainTitleWorkoutsView.xaml
     /// </summary>
-    public partial class MainTitleWorkoutsView : Window
+    public partial class MainTitleWorkoutsView : UserControl
     {
         public MainTitleWorkoutsView()
         {

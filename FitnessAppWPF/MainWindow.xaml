@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FitnessAppWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:views="clr-namespace:FitnessAppWPF.Views"
+        xmlns:vms="clr-namespace:FitnessAppWPF.ViewModels" xmlns:controls="clr-namespace:FitnessAppWPF.Controls" xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
+        Title="FitnessAPP" Height="450" Width="800">
     <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:MainTitleWorkoutsViewModel}">
+                <views:MainTitleWorkoutsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:WorkoutBuilderViewModel}">
+                <views:WorkoutBuilderView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:HistoryViewModel}">
+                <views:HistoryView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ExerciseViewModel}">
+                <views:ExerciseView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
+                <controls:Layout />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:WorkoutListingViewModel}">
+                <controls:WorkoutListing />
+            </DataTemplate>
+
+        </Grid.Resources>
+        <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsOpen}">
+            <ContentControl Content="{Binding CurrentModalViewModel}" />
+        </custom:Modal>
+        <ContentControl Content="{Binding CurrentViewModel}" />
 
     </Grid>
 </Window>

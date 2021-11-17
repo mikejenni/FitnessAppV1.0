@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace FitnessAppWPF.Views
 {
     /// <summary>
-    /// Interaction logic for WorkoutBuilderView.xaml
+    /// Interaction logic for HistoryView.xaml
     /// </summary>
-    public partial class WorkoutBuilderView : UserControl
+    public partial class HistoryView : UserControl
     {
-        public WorkoutBuilderView()
+        public HistoryView()
         {
             InitializeComponent();
         }
