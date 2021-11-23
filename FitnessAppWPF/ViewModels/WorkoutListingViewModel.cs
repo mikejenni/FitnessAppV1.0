@@ -1,4 +1,4 @@
-﻿using FitnessAppWPF.Model;
+﻿using FitnessApp.Business.Models;
 using FitnessAppWPF.Stores;
 using MVVMEssentials.ViewModels;
 using System;
@@ -27,7 +27,7 @@ namespace FitnessAppWPF.ViewModels
             _workouts = new ObservableCollection<WorkoutViewModel>();
             _workouts.CollectionChanged += Workouts_CollectionChanged;
 
-            _workoutStore.WorkoutCreated += WorkoutStore_WorkoutCreated;
+            _workoutStore.WorkoutSaved += WorkoutStore_WorkoutCreated;
 
 
         }

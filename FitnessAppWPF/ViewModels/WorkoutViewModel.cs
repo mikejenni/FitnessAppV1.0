@@ -1,4 +1,4 @@
-﻿using FitnessAppWPF.Model;
+﻿using FitnessApp.Business.Models;
 using MVVMEssentials.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ namespace FitnessAppWPF.ViewModels
         private readonly Workout _workout;
         public string Name => _workout.Name;
         public string Description => _workout.Description;
+        public List<ExerciseViewModel> Exercises { get; set; } = new List<ExerciseViewModel>();
 
         public WorkoutViewModel(Workout workout)
         {

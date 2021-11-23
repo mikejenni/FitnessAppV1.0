@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitnessAppWPF.Model
+namespace FitnessApp.Business.Models
 {
-    public class Exercise
+    public class DomainObject
     {
+        public int Id { get; set; }
     }
 }

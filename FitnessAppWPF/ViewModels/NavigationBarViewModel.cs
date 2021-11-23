@@ -16,17 +16,20 @@ namespace FitnessAppWPF.ViewModels
         public ICommand NavigateMainTitleWorkoutsCommand { get; }
         public ICommand NavigateHistoryCommand { get; }
         public ICommand NavigateExerciseCommand { get; }
+        public ICommand NavigateExerciseBuilderCommand { get; }
         public NavigationBarViewModel(
             INavigationService workoutbuilderNavigationService,
             INavigationService mainTitleWorkoutsNavigationService,
             INavigationService historyNavigationService,
-            INavigationService exerciseNavigateCommand)
+            INavigationService exerciseNavigateCommand,
+            INavigationService exercisebuilderNavigationService)
         {
 
             NavigateWorkoutBuilderCommand = new NavigateCommand(workoutbuilderNavigationService);
             NavigateMainTitleWorkoutsCommand = new NavigateCommand(mainTitleWorkoutsNavigationService);
             NavigateHistoryCommand = new NavigateCommand(historyNavigationService);
             NavigateExerciseCommand = new NavigateCommand(exerciseNavigateCommand);
+            NavigateExerciseBuilderCommand = new NavigateCommand(exercisebuilderNavigationService);
         }
 
     }

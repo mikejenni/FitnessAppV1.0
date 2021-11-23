@@ -1,5 +1,5 @@
 ﻿using FitnessAppWPF.Commands;
-using FitnessAppWPF.Model;
+using FitnessApp.Business.Models;
 using FitnessAppWPF.Stores;
 using MVVMEssentials.Commands;
 using MVVMEssentials.Services;
@@ -25,24 +25,38 @@ namespace FitnessAppWPF.ViewModels
         public bool HasWorkout => _workouts.Count > 0;
         public ICommand NavigateWorkoutBuilderCommand { get; }
         public ICommand CreateWorkoutCommand { get; }
+
+        // INavigationService is from Package MVVMEssentials for Navigation, W
         public MainTitleWorkoutsViewModel(INavigationService workoutbuilderNavigationService, WorkoutStore workoutStore)
         {
             _workoutStore = workoutStore;
             NavigateWorkoutBuilderCommand = new NavigateCommand(workoutbuilderNavigationService);
-            CreateWorkoutCommand = new CreateWorkoutCommand(this, workoutStore);
-            _workouts = new ObservableCollection<WorkoutViewModel>();
 
+            _workouts = new ObservableCollection<WorkoutViewModel>();
+            LoadWorkoutsFromStore(workoutStore);
             _workouts.CollectionChanged += Workouts_CollectionChanged;
 
-            _workoutStore.WorkoutCreated += WorkoutStore_WorkoutCreated;
+            _workoutStore.WorkoutSaved += WorkoutStore_WorkoutCreated;
         }
 
 
         private void WorkoutStore_WorkoutCreated(Workout workout)
         {
-            WorkoutViewModel workoutViewModel = new WorkoutViewModel(workout);
-            _workouts.Insert(0, workoutViewModel);
+            AddWorkoutToList(workout);
+        }
 
+        private void LoadWorkoutsFromStore(WorkoutStore workoutStore)
+        {
+            foreach (Workout workout in workoutStore.Workouts)
+            {
+                AddWorkoutToList(workout);
+            }
+        }
+
+        private void AddWorkoutToList(Workout workout)
+        {
+            WorkoutViewModel workoutViewModel = new WorkoutViewModel(workout); // konvertieren von workout zu workoutViewModel
+            _workouts.Insert(0, workoutViewModel); // Insert an Index 0, ganz oben
         }
 
         private void Workouts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

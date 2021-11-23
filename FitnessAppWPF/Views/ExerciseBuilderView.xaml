@@ -6,18 +6,73 @@
              xmlns:local="clr-namespace:FitnessAppWPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilatyConverter"/>
+    </UserControl.Resources>
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Create your Exercise" FontSize="35" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Margin="100,20,100,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name of Exercise:" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" MaxLines="2"/>
+
+                <ComboBox Name="RepsOrTime"  Grid.Row="4" Width="200" Height="25" FontSize="15" VerticalAlignment="Center" 
+                          HorizontalAlignment="Left" ItemsSource="{Binding TrainingTargets}" SelectedItem="{Binding SelectedTrainingTarget}"
+                          >
+                </ComboBox>
+                <TextBox Grid.Row="4"  Grid.Column="2" Text="{Binding Reps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                         Visibility="{Binding RepsSelected, Converter={StaticResource BooleanToVisibilatyConverter}}">
+                </TextBox>
+
+                <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                         Visibility="{Binding TimeSelected, Converter={StaticResource BooleanToVisibilatyConverter}}"/>
+                <ComboBox Grid.Row="6" Width="200" Height="25" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"
+                          ItemsSource="{Binding Bodyparts}" SelectedItem="{Binding SelectedBodyPart}">
+
+
+                </ComboBox>
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Count as Round:" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <CheckBox Grid.Row="8" Grid.Column="2" IsChecked="{Binding CountAsRound}" />
+
+            </Grid>
         </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width= "*"/>
+                <ColumnDefinition Width= "*"/>
+            </Grid.ColumnDefinitions>
 
+            <Button Grid.Column="0" Height="30" Content="Save" Command="{Binding CreateExerciseCommand}" Margin="100,20,100,0"/>
+            <Button Grid.Column="1" Height="30" Content="Save As New" Command="{Binding CreateExerciseCommand}" Margin="100,20,100,0"/>
+
+        </Grid>
 
 
     </Grid>

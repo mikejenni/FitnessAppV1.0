@@ -1,7 +1,13 @@
-﻿using FitnessAppWPF.Services;
+﻿using FitnessApp.Business.Services;
+using FitnessApp.EntityFramework;
+using FitnessApp.EntityFramework.Services;
+using FitnessAppWPF.Services;
 using FitnessAppWPF.Stores;
 using FitnessAppWPF.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MVVMEssentials.Services;
 using MVVMEssentials.Stores;
 using System;
@@ -20,38 +26,81 @@ namespace FitnessAppWPF
     public partial class App : Application
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IHost _host;
         public App()
         {
-            IServiceCollection services = new ServiceCollection();
+            _host = CreateHostBuilder().Build();
 
-            services.AddSingleton<NavigationStore>();
-            services.AddSingleton<ModalNavigationStore>();
+            // IServiceCollection services = new ServiceCollection();
 
-            services.AddSingleton<CloseModalNavigationService>();
-            services.AddSingleton<MainViewModel>();
-            services.AddSingleton<WorkoutStore>();
-
-            services.AddTransient<MainTitleWorkoutsViewModel>(CreateMainTitleWorkoutsViewModel);
-            services.AddTransient<WorkoutBuilderViewModel>();
-            services.AddTransient<HistoryViewModel>();
-            services.AddTransient<ExerciseViewModel>();
-            services.AddTransient<WorkoutListingViewModel>();
-
-            services.AddSingleton<MainWindow>(s => new MainWindow()
-            {
-                DataContext = s.GetRequiredService<MainViewModel>()
-            });
-            services.AddSingleton<INavigationService>(s => CreateMainTitleWorkoutNavigationService(s));
-            services.AddTransient<NavigationBarViewModel>(CreateNavigationBarViewModel);
-            _serviceProvider = services.BuildServiceProvider();
+            //_serviceProvider = services.BuildServiceProvider();
 
         }
+        private static IHostBuilder CreateHostBuilder(string[] args = null)
+        {
+            return Host.CreateDefaultBuilder(args).ConfigureAppConfiguration(c =>
+            {
+                c.AddJsonFile("appsettings.json");
+                c.AddEnvironmentVariables();
+            }).ConfigureServices((context, services) => {
+
+                string connectionString = context.Configuration.GetConnectionString("sqlite");
+                Action<DbContextOptionsBuilder> configureDbContext = o => o.UseSqlite(connectionString);
+
+                services.AddDbContext<FitnessAppDbContext>(configureDbContext);
+                services.AddSingleton<FitnessAppDbContextFactory>(new FitnessAppDbContextFactory(configureDbContext));
+
+                services.AddSingleton<IExerciseService, ExerciseDataService>();
+                services.AddSingleton<IWorkoutService, WorkoutDataService>();
+
+                services.AddSingleton<NavigationStore>();
+                services.AddSingleton<ModalNavigationStore>();
+
+                services.AddSingleton<CloseModalNavigationService>();
+                services.AddSingleton<MainViewModel>();
+                services.AddSingleton<WorkoutStore>();
+                services.AddSingleton<ExerciseStore>();
+
+                services.AddTransient<MainTitleWorkoutsViewModel>(CreateMainTitleWorkoutsViewModel);
+                services.AddTransient<ExerciseMainViewModel>(CreateMainTitleExercisesViewModel);
+                services.AddTransient<WorkoutBuilderViewModel>();
+                services.AddTransient<ExerciseBuilderViewModel>();
+                services.AddTransient<HistoryViewModel>();
+                //services.AddTransient<ExerciseViewModel>();
+                services.AddTransient<WorkoutListingViewModel>();
+
+
+
+
+                services.AddSingleton<MainWindow>(s => new MainWindow()
+                {
+                    DataContext = s.GetRequiredService<MainViewModel>()
+                });
+                services.AddSingleton<INavigationService>(s => CreateMainTitleWorkoutNavigationService(s));
+                services.AddTransient<NavigationBarViewModel>(CreateNavigationBarViewModel);
+
+
+
+            });
+        }
+
+
+
         protected override void OnStartup(StartupEventArgs e)
         {
-            INavigationService initialNavigationService = _serviceProvider.GetRequiredService<INavigationService>();
+
+            _host.Start();
+
+            FitnessAppDbContextFactory contextFactory = _host.Services.GetRequiredService<FitnessAppDbContextFactory>();
+            using (FitnessAppDbContext context = contextFactory.CreateDbContext())
+            {
+                context.Database.Migrate();
+            }
+
+            INavigationService initialNavigationService = _host.Services.GetRequiredService<INavigationService>();
             initialNavigationService.Navigate();
 
-            MainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+            MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
 
             base.OnStartup(e);
@@ -60,23 +109,38 @@ namespace FitnessAppWPF
 
 
 
-        private NavigationBarViewModel CreateNavigationBarViewModel(IServiceProvider serviceProvider)
+        private static NavigationBarViewModel CreateNavigationBarViewModel(IServiceProvider serviceProvider)
         {
             return new NavigationBarViewModel(
                 CreateWorkoutBuilderNavigationService(serviceProvider),
                 CreateMainTitleWorkoutNavigationService(serviceProvider),
                 CreateHistoryNavigationService(serviceProvider),
-                CreateExerciseNavigationService(serviceProvider));
+                CreateExerciseNavigationService(serviceProvider),
+                CreateExercisetBuilderNavigationService(serviceProvider));
         }
-        private MainTitleWorkoutsViewModel CreateMainTitleWorkoutsViewModel(IServiceProvider serviceProvider)
+        private static MainTitleWorkoutsViewModel CreateMainTitleWorkoutsViewModel(IServiceProvider serviceProvider)
         {
             return new MainTitleWorkoutsViewModel(
                 CreateWorkoutBuilderNavigationService(serviceProvider),
                 serviceProvider.GetRequiredService<WorkoutStore>());
 
         }
+        private static ExerciseMainViewModel CreateMainTitleExercisesViewModel(IServiceProvider serviceProvider)
+        {
+            return new ExerciseMainViewModel(
+                CreateExercisetBuilderNavigationService(serviceProvider),
+                serviceProvider.GetRequiredService<ExerciseStore>());
+        }
 
-        private INavigationService CreateWorkoutBuilderNavigationService(IServiceProvider serviceProvider)
+        private static INavigationService CreateExercisetBuilderNavigationService(IServiceProvider serviceProvider)
+        {
+            return new LayoutNavigationService<ExerciseBuilderViewModel>(
+                serviceProvider.GetRequiredService<NavigationStore>(),
+                () => serviceProvider.GetRequiredService<ExerciseBuilderViewModel>(),
+                () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
+        }
+
+        private static INavigationService CreateWorkoutBuilderNavigationService(IServiceProvider serviceProvider)
         {
             return new LayoutNavigationService<WorkoutBuilderViewModel>(
                 serviceProvider.GetRequiredService<NavigationStore>(),
@@ -84,27 +148,28 @@ namespace FitnessAppWPF
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
 
-        private INavigationService CreateMainTitleWorkoutNavigationService(IServiceProvider serviceProvider)
+        private static INavigationService CreateMainTitleWorkoutNavigationService(IServiceProvider serviceProvider)
         {
             return new LayoutNavigationService<MainTitleWorkoutsViewModel>(
                 serviceProvider.GetRequiredService<NavigationStore>(),
                 () => serviceProvider.GetRequiredService<MainTitleWorkoutsViewModel>(),
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
-        private INavigationService CreateHistoryNavigationService(IServiceProvider serviceProvider)
+        private static INavigationService CreateHistoryNavigationService(IServiceProvider serviceProvider)
         {
             return new LayoutNavigationService<HistoryViewModel>(
                 serviceProvider.GetRequiredService<NavigationStore>(),
                 () => serviceProvider.GetRequiredService<HistoryViewModel>(),
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
-        private INavigationService CreateExerciseNavigationService(IServiceProvider serviceProvider)
+        private static INavigationService CreateExerciseNavigationService(IServiceProvider serviceProvider)
         {
-            return new LayoutNavigationService<ExerciseViewModel>(
+            return new LayoutNavigationService<ExerciseMainViewModel>(
                 serviceProvider.GetRequiredService<NavigationStore>(),
-                () => serviceProvider.GetRequiredService<ExerciseViewModel>(),
+                () => serviceProvider.GetRequiredService<ExerciseMainViewModel>(),
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
+
     }
 }
 

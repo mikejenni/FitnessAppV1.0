@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitnessAppWPF.Model
+namespace FitnessApp.Business.Models
 {
-    public class Workout
+    public class Workout : DomainObject
     {
 
-        public int Id { get; set; }
         public string Name { get; set; }
 
 

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FitnessAppWPF.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="800" BorderBrush="Black" BorderThickness="0,1,0,0">
-    <Grid Background="#CED8F6">
+    <Grid Background="#85b8cb">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -15,26 +15,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="BtnGoToWorkouts" Grid.Column="0" Margin="15,10,15,10" Height="50" VerticalAlignment="Center" Command="{Binding NavigateMainTitleWorkoutsCommand}">
-            <Button.Content>
-                <TextBlock Text="Workouts"/>
-            </Button.Content>
+        <Button x:Name="BtnGoToWorkouts" Grid.Column="0" Background="#1d6a96" Margin="15,10,15,10" Content="Workouts" Height="50" VerticalAlignment="Center" Command="{Binding NavigateMainTitleWorkoutsCommand}"/>
+        <Button x:Name="BtnGoBuilder" Grid.Column="1" Background="#1d6a96" Margin="15,10,15,10" Content= "Workout Builder" Height="50" VerticalAlignment="Center" Command="{Binding NavigateWorkoutBuilderCommand}" />
+        <Button x:Name="BtnGoExercises" Grid.Column="2" Background="#1d6a96" Margin="15,10,15,10" Content="Exercises" Height="50" VerticalAlignment="Center" Command="{Binding NavigateExerciseCommand}"/>
+        <Button x:Name="BtnGoBack" Grid.Column="3" Background="#1d6a96" Margin="15,10,15,10" Content="Exercise Builder" Height="50" VerticalAlignment="Center" Command="{Binding NavigateExerciseBuilderCommand}"/>
+        <Button x:Name="BtnGoHistory" Grid.Column="4" Background="#1d6a96" Margin="15,10,15,10" Content="History" Height="50" VerticalAlignment="Center" Command="{Binding NavigateHistoryCommand}" />
 
-        </Button>
-        <Button x:Name="BtnGoExercises" Grid.Column="1" Margin="15,10,15,10" Content="Exercises" Height="50" VerticalAlignment="Center" Command="{Binding NavigateExerciseCommand}">
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="FontSize" Value="18"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button x:Name="BtnGoBuilder" Grid.Column="2" Margin="15,10,15,10" Content="Builder" Height="50" VerticalAlignment="Center" Command="{Binding NavigateWorkoutBuilderCommand}" />
-        <Button x:Name="BtnGoHistory" Grid.Column="3" Margin="15,10,15,10" Content="History" Height="50" VerticalAlignment="Center" Command="{Binding NavigateHistoryCommand}" />
-        <Button x:Name="BtnGoBack" Grid.Column="4" Margin="15,10,15,10" Content="Back" Height="50" VerticalAlignment="Center"/>
 
     </Grid>
 

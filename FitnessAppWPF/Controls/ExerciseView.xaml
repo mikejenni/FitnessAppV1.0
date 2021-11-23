@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FitnessAppWPF.Controls.WorkoutView"
+﻿<UserControl x:Class="FitnessAppWPF.Controls.ExerciseView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,18 +10,24 @@
     <Grid Background="#283B42">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="160"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Background="#85b8cb" Margin="7" Grid.Column="0">
             <TextBlock Text="{Binding Name}" Foreground="#1d6a96" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
         </StackPanel>
         <StackPanel Background="#85b8cb" Margin="7" Grid.Column="1">
+            <TextBlock Text="{Binding TrainingTarget}" Foreground="#1d6a96" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
+        </StackPanel>
+        <StackPanel Background="#85b8cb" Margin="7" Grid.Column="2">
+            <TextBlock Text="{Binding TrainingTargetValue}" Foreground="#1d6a96" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
+        </StackPanel>
+        <StackPanel Background="#85b8cb" Margin="7" Grid.Column="3">
             <TextBlock Text="{Binding Description}" Foreground="#1d6a96" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
         </StackPanel>
 
+
     </Grid>
-
-
-
 </UserControl>

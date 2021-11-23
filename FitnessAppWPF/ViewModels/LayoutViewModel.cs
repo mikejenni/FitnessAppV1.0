@@ -18,7 +18,7 @@ namespace FitnessAppWPF.ViewModels
             ContentViewModel = contentViewModel;
         }
 
-        public override void Dispose()
+        public override void Dispose()      // Beim navigieren wird die Dispose Methode aufgerufen, Memory leaks zu verhindern, speicher frei räumen
         {
             NavigationBarViewModel.Dispose();
             ContentViewModel.Dispose();

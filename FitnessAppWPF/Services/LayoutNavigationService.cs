@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace FitnessAppWPF.Services
 {
+    // Aktualisiert das Layout bei Knopfdruck
     public class LayoutNavigationService<TViewModel> : INavigationService where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;

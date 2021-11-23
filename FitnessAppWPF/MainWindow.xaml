@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:views="clr-namespace:FitnessAppWPF.Views"
         xmlns:vms="clr-namespace:FitnessAppWPF.ViewModels" xmlns:controls="clr-namespace:FitnessAppWPF.Controls" xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
-        Title="FitnessAPP" Height="450" Width="800">
+        Title="FitnessAPP" Height="550" Width="800" Background="#d1dddb">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:MainTitleWorkoutsViewModel}">
@@ -16,17 +16,24 @@
             <DataTemplate DataType="{x:Type vms:WorkoutBuilderViewModel}">
                 <views:WorkoutBuilderView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ExerciseBuilderViewModel}">
+                <views:ExerciseBuilderView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type vms:HistoryViewModel}">
                 <views:HistoryView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:ExerciseViewModel}">
-                <views:ExerciseView />
+
+            <DataTemplate DataType="{x:Type vms:ExerciseMainViewModel}">
+                <views:ExerciseMainView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
                 <controls:Layout />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:WorkoutListingViewModel}">
                 <controls:WorkoutListing />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:ExerciseListingViewModel}">
+                <controls:ExerciseListing />
             </DataTemplate>
 
         </Grid.Resources>
