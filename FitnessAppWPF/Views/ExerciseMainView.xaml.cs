@@ -24,5 +24,26 @@ namespace FitnessAppWPF.Views
         {
             InitializeComponent();
         }
+
+
+        public static readonly DependencyProperty AddExerciseToUnsavedWorkoutCommandProperty = DependencyProperty.Register(
+        "AddExerciseToUnsavedWorkoutCommand", typeof(ICommand),
+        typeof(ExerciseMainView), new PropertyMetadata(null) 
+        );
+
+        //TODO Selected Item mit Doppelklick selektieren
+        public ICommand AddExerciseToUnsavedWorkoutCommand
+        {
+            get => (ICommand)GetValue(AddExerciseToUnsavedWorkoutCommandProperty);
+            set => SetValue(AddExerciseToUnsavedWorkoutCommandProperty, value);
+        }
+
+        private void ExerciseListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (AddExerciseToUnsavedWorkoutCommand != null)
+            {
+                AddExerciseToUnsavedWorkoutCommand.Execute(null);
+            }
+        }
     }
 }

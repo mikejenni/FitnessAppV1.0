@@ -63,7 +63,7 @@ namespace FitnessAppWPF
 
                 services.AddTransient<MainTitleWorkoutsViewModel>(CreateMainTitleWorkoutsViewModel);
                 services.AddTransient<ExerciseMainViewModel>(CreateMainTitleExercisesViewModel);
-                services.AddTransient<WorkoutBuilderViewModel>();
+                services.AddTransient<WorkoutBuilderViewModel>(CreateWorkoutBuilderViewModel);
                 services.AddTransient<ExerciseBuilderViewModel>();
                 services.AddTransient<HistoryViewModel>();
                 //services.AddTransient<ExerciseViewModel>();
@@ -125,11 +125,19 @@ namespace FitnessAppWPF
                 serviceProvider.GetRequiredService<WorkoutStore>());
 
         }
+        private static WorkoutBuilderViewModel CreateWorkoutBuilderViewModel(IServiceProvider serviceProvider)
+        {
+            INavigationService exerciseManNavigation = CreateExerciseNavigationService(serviceProvider);
+
+            return new WorkoutBuilderViewModel(serviceProvider.GetRequiredService<WorkoutStore>(), exerciseManNavigation);
+
+        }
         private static ExerciseMainViewModel CreateMainTitleExercisesViewModel(IServiceProvider serviceProvider)
         {
             return new ExerciseMainViewModel(
                 CreateExercisetBuilderNavigationService(serviceProvider),
-                serviceProvider.GetRequiredService<ExerciseStore>());
+                serviceProvider.GetRequiredService<ExerciseStore>(),
+                serviceProvider.GetRequiredService<WorkoutStore>());
         }
 
         private static INavigationService CreateExercisetBuilderNavigationService(IServiceProvider serviceProvider)
@@ -169,6 +177,8 @@ namespace FitnessAppWPF
                 () => serviceProvider.GetRequiredService<ExerciseMainViewModel>(),
                 () => serviceProvider.GetRequiredService<NavigationBarViewModel>());
         }
+
+
 
     }
 }

@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Choose your Exercise" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
+        <TextBlock Text="Choose your Exercise" Foreground="#48a6ee" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
         <StackPanel Grid.Row="1" Margin="100,20,100,0">
             <StackPanel Orientation="Horizontal">
                 <ComboBox Width="175" Height="20" Margin="0,0,10,0" ItemsSource="{Binding TrainingTargets}" SelectedItem="{Binding SelectedTrainingTarget}"/>
@@ -32,7 +32,7 @@
         </StackPanel>
         <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="2" Margin="100,10,100,0">
             <StackPanel Orientation="Vertical" Margin="0,20,0,0">
-                <uc:ExerciseListView Margin="0,10,0,0"/>
+                <uc:ExerciseListView Margin="0,10,0,0" MouseDoubleClick="ExerciseListView_MouseDoubleClick" />
                 <!--<uc:ExerciseListing Margin="0,10,0,0"/>-->
                 <Button Height="30" Content="+" Command="{Binding NavigateExerciseBuilderCommand}" Margin="0,10,0,0"/>
             </StackPanel>

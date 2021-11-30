@@ -7,17 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="50"
              d:DesignWidth="600" BorderBrush="Black" BorderThickness="1" Margin="1">
-    <Grid Background="#283B42">
+    <Grid Background="#48a6ee">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Background="#85b8cb" Margin="7" Grid.Column="0">
-            <TextBlock Text="{Binding Name}" Foreground="#1d6a96" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
+        <StackPanel Background="#000000" Margin="2,2,1,2" Grid.Column="0">
+            <TextBlock Text="{Binding Name}" Foreground="#48a6ee" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5"/>
         </StackPanel>
-        <StackPanel Background="#85b8cb" Margin="7" Grid.Column="1">
-            <TextBlock Text="{Binding Description}" Foreground="#1d6a96" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
+        <StackPanel Background="#000000" Margin="1,2,2,2" Grid.Column="1">
+            <TextBlock Text="{Binding Description}" Foreground="#48a6ee" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"/>
         </StackPanel>
 
     </Grid>

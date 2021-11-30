@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Create your Exercise" FontSize="35" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock Text="Create your Exercise" Foreground="#48a6ee" FontSize="35" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <StackPanel Grid.Row="1" Margin="100,20,100,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -38,9 +38,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name of Exercise:" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name of Exercise:" Foreground="#48a6ee" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
                 <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Description:" Foreground="#48a6ee" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" AcceptsReturn="True" TextWrapping="Wrap" MaxLines="2"/>
 
                 <ComboBox Name="RepsOrTime"  Grid.Row="4" Width="200" Height="25" FontSize="15" VerticalAlignment="Center" 
@@ -58,7 +58,7 @@
 
 
                 </ComboBox>
-                <TextBlock Grid.Row="8" Grid.Column="0" Text="Count as Round:" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Count as Round:" Foreground="#48a6ee" FontSize="20" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                 <CheckBox Grid.Row="8" Grid.Column="2" IsChecked="{Binding CountAsRound}" />
 
             </Grid>

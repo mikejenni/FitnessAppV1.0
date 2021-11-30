@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="History" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
+        <TextBlock Text="History" Foreground="#48a6ee" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
         <StackPanel Grid.Row="1" Margin="100,20,100,0">
             <TextBlock>Test</TextBlock>
         </StackPanel>

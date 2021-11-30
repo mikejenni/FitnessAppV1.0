@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Choose your Exercise" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
+        <TextBlock Text="Choose your Exercise" Foreground="#48a6ee" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
         <StackPanel Grid.Row="1" Margin="100,20,100,0">
             <StackPanel Orientation="Horizontal">
                 <ComboBox Width="200" Height="20" Margin="0,0,10,0">

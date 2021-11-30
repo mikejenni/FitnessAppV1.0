@@ -38,6 +38,7 @@ namespace FitnessAppWPF.ViewModels
         public ICommand NavigateExerciseBuilderCommand { get; }
         public ICommand CreateExersiceCommand { get; }
         public ICommand FilterExersiceCommand { get; }
+        public ICommand AddExerciseToUnsavedWorkoutCommand { get; }
 
 
         private TrainingTarget _selectedtrainingTarget;
@@ -104,8 +105,35 @@ namespace FitnessAppWPF.ViewModels
             }
         }
 
+        private object _selectedItem;
 
-        public ExerciseMainViewModel(INavigationService exercisebuilderNavigationService, ExerciseStore exerciseStore)
+        public object SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+
+
+
+
+        private Workout _unsavedWorkout;
+
+        public Workout UnsavedWorkout
+        {
+            get { return _unsavedWorkout; }
+            set
+            {
+                _unsavedWorkout = value;
+                OnPropertyChanged(nameof(UnsavedWorkout));
+            }
+        }
+
+
+        public ExerciseMainViewModel(INavigationService exercisebuilderNavigationService, ExerciseStore exerciseStore, WorkoutStore workoutStore)
         {
             _exerciseStore = exerciseStore;
             NavigateExerciseBuilderCommand = new NavigateCommand(exercisebuilderNavigationService);
@@ -117,9 +145,16 @@ namespace FitnessAppWPF.ViewModels
             _exercises.CollectionChanged += Exercise_CollectionChanged;
 
             _exerciseStore.ExerciseCreated += ExerciseStore_ExerciseCreated;
+            workoutStore.WorkoutCreated += WorkoutStore_WorkoutCreated;
 
+            AddExerciseToUnsavedWorkoutCommand = new AddExerciseToUnsavedWorkoutCommand(this);
+            UnsavedWorkout = workoutStore.UnsavedWorkout;
+        }
 
-
+        private void WorkoutStore_WorkoutCreated(Workout unsavedWorkout)
+        {
+            UnsavedWorkout = unsavedWorkout;
+            // addÊxerciseToWorkoutCommand doppelklick soll Command ausführen, dafür braucht es dependencvy property
         }
 
         private void ExerciseStore_ExerciseCreated(Exercise exercise)

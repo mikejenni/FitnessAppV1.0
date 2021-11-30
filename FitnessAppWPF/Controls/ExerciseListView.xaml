@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView SelectionMode="Multiple" ItemsSource="{Binding Exercises}" Background="#d1dddb">
+        <ListView SelectionMode="Multiple" ItemsSource="{Binding Exercises}" SelectedItem="{Binding SelectedItem}" Background="#000000">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />

@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FitnessAppWPF.Commands
 {
@@ -33,7 +34,7 @@ namespace FitnessAppWPF.Commands
 
         public override bool CanExecute(object parameter)
         {
-            _canExecute = string.IsNullOrWhiteSpace(_workoutBuilderViewModel.Name) == false && string.IsNullOrWhiteSpace(_workoutBuilderViewModel.Description) == false;
+            _canExecute = string.IsNullOrWhiteSpace(_workoutStore.UnsavedWorkout?.Name) == false && string.IsNullOrWhiteSpace(_workoutStore.UnsavedWorkout?.Description) == false && _workoutStore.UnsavedWorkout?.Exercises?.Count >= 1;
             return _canExecute == true && base.CanExecute(parameter);
         }
 
@@ -41,10 +42,17 @@ namespace FitnessAppWPF.Commands
         {
             Workout workout = new Workout()
             {
-                Name = _workoutBuilderViewModel.Name,
-                Description = _workoutBuilderViewModel.Description
+                Name = _workoutStore.UnsavedWorkout.Name,
+                Description = _workoutStore.UnsavedWorkout.Description,
+                Exercises = _workoutStore.UnsavedWorkout.Exercises,
+
             };
             _workoutStore.SaveNewWorkout(workout);
+            MessageBox.Show($"{workout.Name} wurde hinzugefügt");
+            _workoutBuilderViewModel.Name = string.Empty;
+            _workoutBuilderViewModel.Description = string.Empty;
+            _workoutBuilderViewModel.Exercises.Clear();
+
         }
     }
 }

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:views="clr-namespace:FitnessAppWPF.Views"
         xmlns:vms="clr-namespace:FitnessAppWPF.ViewModels" xmlns:controls="clr-namespace:FitnessAppWPF.Controls" xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
-        Title="FitnessAPP" Height="550" Width="800" Background="#d1dddb">
+        Title="FitnessAPP" Height="550" Width="800" Background="#000000" BorderBrush="#48a6ee">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:MainTitleWorkoutsViewModel}">
@@ -24,7 +24,7 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type vms:ExerciseMainViewModel}">
-                <views:ExerciseMainView />
+                <views:ExerciseMainView AddExerciseToUnsavedWorkoutCommand="{Binding AddExerciseToUnsavedWorkoutCommand}"/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:LayoutViewModel}">
                 <controls:Layout />
