@@ -11,7 +11,7 @@
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:MainTitleWorkoutsViewModel}">
-                <views:MainTitleWorkoutsView />
+                <views:MainTitleWorkoutsView StartWorkoutPlaylistCommand="{Binding StartWorkoutPlaylistCommand}" />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:WorkoutBuilderViewModel}">
                 <views:WorkoutBuilderView />
@@ -34,6 +34,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type vms:ExerciseListingViewModel}">
                 <controls:ExerciseListing />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:WorkoutPlaylistViewModel}">
+                <views:WorkoutPlaylistView />
             </DataTemplate>
 
         </Grid.Resources>

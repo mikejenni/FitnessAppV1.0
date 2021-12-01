@@ -25,12 +25,14 @@ namespace FitnessAppWPF.ViewModels
         public bool HasWorkout => _workouts.Count > 0;
         public ICommand NavigateWorkoutBuilderCommand { get; }
         public ICommand CreateWorkoutCommand { get; }
+        public ICommand StartWorkoutPlaylistCommand { get; }
 
         // INavigationService is from Package MVVMEssentials for Navigation, W
-        public MainTitleWorkoutsViewModel(INavigationService workoutbuilderNavigationService, WorkoutStore workoutStore)
+        public MainTitleWorkoutsViewModel(INavigationService workoutplaylistNavigationService, INavigationService workoutbuilderNavigationService, WorkoutStore workoutStore)
         {
             _workoutStore = workoutStore;
             NavigateWorkoutBuilderCommand = new NavigateCommand(workoutbuilderNavigationService);
+            StartWorkoutPlaylistCommand = new StartWorkoutPlaylistCommand(this, workoutplaylistNavigationService);
 
             _workouts = new ObservableCollection<WorkoutViewModel>();
             LoadWorkoutsFromStore(workoutStore);
@@ -64,7 +66,17 @@ namespace FitnessAppWPF.ViewModels
             OnPropertyChanged(nameof(HasWorkout));
         }
 
+        private object _selectedItem;
 
+        public object SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
 
     }
 }

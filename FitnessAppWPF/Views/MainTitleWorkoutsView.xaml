@@ -17,7 +17,7 @@
         <TextBlock Text="Workouts" Foreground="#48a6ee" Grid.Row="0" FontSize="35" TextAlignment="Center"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="100,10,100,0">
             <StackPanel Orientation="Vertical" Margin="0,20,0,0">
-                <uc:WorkoutListing Margin="0,10,0,0"/>
+                <uc:WorkoutListView Margin="0,10,0,0" MouseDoubleClick="WorkoutListView_MouseDoubleClick" />
                 <Button Height="30" Content="+" Command="{Binding NavigateWorkoutBuilderCommand}" Margin="0,10,0,0"/>
             </StackPanel>
         </ScrollViewer>

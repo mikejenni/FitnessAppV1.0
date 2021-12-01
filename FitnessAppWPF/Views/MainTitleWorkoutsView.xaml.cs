@@ -24,5 +24,22 @@ namespace FitnessAppWPF.Views
         {
             InitializeComponent();
         }
+
+        public static readonly DependencyProperty StartWorkoutPlaylistCommandProperty = DependencyProperty.Register(
+       "StartWorkoutPlaylistCommand", typeof(ICommand),
+       typeof(MainTitleWorkoutsView), new PropertyMetadata(null)
+       );
+
+        //TODO Selected Item mit Doppelklick selektieren
+        public ICommand StartWorkoutPlaylistCommand
+        {
+            get => (ICommand)GetValue(StartWorkoutPlaylistCommandProperty);
+            set => SetValue(StartWorkoutPlaylistCommandProperty, value);
+        }
+
+        private void WorkoutListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            StartWorkoutPlaylistCommand?.Execute(null);
+        }
     }
 }
