@@ -32,7 +32,7 @@ namespace FitnessAppWPF.ViewModels
         {
             _workoutStore = workoutStore;
             NavigateWorkoutBuilderCommand = new NavigateCommand(workoutbuilderNavigationService);
-            StartWorkoutPlaylistCommand = new StartWorkoutPlaylistCommand(this, workoutplaylistNavigationService);
+            StartWorkoutPlaylistCommand = new StartWorkoutPlaylistCommand(this, workoutplaylistNavigationService, _workoutStore);
 
             _workouts = new ObservableCollection<WorkoutViewModel>();
             LoadWorkoutsFromStore(workoutStore);

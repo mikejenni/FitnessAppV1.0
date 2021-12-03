@@ -22,6 +22,7 @@ namespace FitnessAppWPF.Stores
         public event Action<Workout> WorkoutSaved;
         public event Action<List<Workout>> WorkoutsLoaded;
         public event Action<Workout> WorkoutCreated;
+        public Workout WorkoutPlaylist { get; private set; }
 
         // Konstruktor braucht IWoorkoutService, ist die Anbindung zur Datenbank. So kann es mit Datenbank sprechen.
         public WorkoutStore(IWorkoutService workoutService)
@@ -58,5 +59,10 @@ namespace FitnessAppWPF.Stores
             WorkoutCreated?.Invoke(workout);
         }
 
+        public void SetWorkoutPlaylist(Workout workout)
+        {
+            WorkoutPlaylist = workout;
+
+        }
     }
 }

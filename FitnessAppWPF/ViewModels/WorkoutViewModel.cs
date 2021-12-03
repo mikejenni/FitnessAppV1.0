@@ -10,14 +10,14 @@ namespace FitnessAppWPF.ViewModels
 {
     public class WorkoutViewModel : ViewModelBase
     {
-        private readonly Workout _workout;
-        public string Name => _workout.Name;
-        public string Description => _workout.Description;
+        public readonly Workout Workout;
+        public string Name => Workout.Name;
+        public string Description => Workout.Description;
         public List<ExerciseViewModel> Exercises { get; set; } = new List<ExerciseViewModel>();
 
         public WorkoutViewModel(Workout workout)
         {
-            _workout = workout;
+            this.Workout = workout;
 
         }
 
