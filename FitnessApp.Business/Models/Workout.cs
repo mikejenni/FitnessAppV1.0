@@ -15,6 +15,8 @@ namespace FitnessApp.Business.Models
 
         public string Description { get; set; }
 
+        public DateTime TimeStamp { get; set; }
+
 
         public List<Exercise> Exercises { get; set; } = new List<Exercise>();
 

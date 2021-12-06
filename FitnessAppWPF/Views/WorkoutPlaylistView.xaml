@@ -23,12 +23,12 @@
 
         <TextBlock 
             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
-            Text="Create your Exercise" Foreground="#48a6ee" FontSize="35" TextAlignment="Left" TextDecorations="Underline"
+            Text="{Binding Workout.Name}" Foreground="#48a6ee" FontSize="35" TextAlignment="Left" TextDecorations="Underline"
             VerticalAlignment="Top" HorizontalAlignment="Left"
             Margin="0 20"/>
         <Border BorderThickness="2" BorderBrush="#48a6ee" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" >
             <TextBlock
-             Text="Pushups" Foreground="#48a6ee" FontSize="35" TextAlignment="Left"
+             Text="{Binding ActiveExercise.Name}" Foreground="#48a6ee" FontSize="35" TextAlignment="Left"
              Margin="10"  
             />
         </Border>
@@ -49,8 +49,14 @@
             <TextBlock 
                 Text="Round:" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
             <Border BorderThickness="2" BorderBrush="#48a6ee" HorizontalAlignment="Left">
-                <TextBlock 
-                Text="1 of 5" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Text="{Binding ActiveRound}" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
+                    <TextBlock
+                        Text=" of " Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
+                    <TextBlock 
+                        Text="{Binding TotalRound}" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
+                </StackPanel>
             </Border>
         </StackPanel>
 
@@ -62,8 +68,10 @@
         </Border>
         <StackPanel Grid.Column="2" Grid.Row="3" Grid.RowSpan="2">
             <ProgressBar/>
-            <Button/>
-            <Button/>
+            <Button Content="Next"/>
+            <Button Content="Previous"/>
+            <Button Content="Start / pause"/>
+            <Button Content="Stop"/>
         </StackPanel>
     </Grid>
 </UserControl>
