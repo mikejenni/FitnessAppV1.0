@@ -16,5 +16,7 @@ namespace FitnessApp.Business.Models
         public Bodypart Bodypart { get; set; }
         public bool CountAsRound { get; set; }
         public string Description { get; set; }
+
+        public virtual ICollection<Workout> Workouts { get; set; }
     }
 }

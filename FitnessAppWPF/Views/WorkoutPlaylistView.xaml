@@ -42,7 +42,7 @@
                 Text="Time elapsed:" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
             <Border BorderThickness="2" BorderBrush="#48a6ee" HorizontalAlignment="Left">
                 <TextBlock 
-                Text="00:00:00" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
+                Text="{Binding ElapsedTrainingTime}" Foreground="#48a6ee" FontSize="20" FontWeight="Bold" TextAlignment="Left"/>
             </Border>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="4">
@@ -62,7 +62,7 @@
 
         <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" BorderThickness="2" BorderBrush="#48a6ee" HorizontalAlignment="Right">
             <TextBlock
-             Text="00:00:56" Foreground="#48a6ee" FontSize="70" TextAlignment="Right"
+             Text="{Binding TrainingTarget}" Foreground="#48a6ee" FontSize="70" TextAlignment="Right"
              Margin="10"  
             />
         </Border>
@@ -70,7 +70,7 @@
             <ProgressBar/>
             <Button Content="Next"/>
             <Button Content="Previous"/>
-            <Button Content="Start / pause"/>
+            <Button Content="Start / pause" Command="{Binding StartWorkoutCommand}"/>
             <Button Content="Stop"/>
         </StackPanel>
     </Grid>

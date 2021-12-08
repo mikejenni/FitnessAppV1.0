@@ -1,6 +1,7 @@
 ﻿using FitnessApp.Business.Models;
 using FitnessApp.Business.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SimpleTrader.EntityFramework.Services.Common;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,22 @@ namespace FitnessApp.EntityFramework.Services
         }
         public async Task<Workout> Create(Workout entity)
         {
-            return await _nonQueryDataService.Create(entity);
+            using (FitnessAppDbContext context = _contextFactory.CreateDbContext()) // mach das und dann wird es gelöscht, bei Datenbanken sicherstellen, 
+            {
+                List<Exercise> exercises =new List<Exercise>() ;
+                foreach (var exercise in entity.Exercises)
+                {
+                    var ex = context.Exercises.First(e => e.Id == exercise.Id);
+                    exercises.Add(ex);
+                }
+
+                entity.Exercises = exercises;
+
+                EntityEntry<Workout> createdResult = await context.Set<Workout>().AddAsync(entity); // So werden Freezes zu unterbunden, wird parallel oder im Hintergrund ausgeführt.
+                await context.SaveChangesAsync(); //  Die Schreibweise zu EntityFramework, Methoden das es keine SQL Schreibweise braucht
+
+                return createdResult.Entity;
+            }
         }
 
         public async Task<bool> Delete(int id)
@@ -43,7 +59,7 @@ namespace FitnessApp.EntityFramework.Services
         {
             using (FitnessAppDbContext context = _contextFactory.CreateDbContext())
             {
-                IEnumerable<Workout> entities = await context.Set<Workout>().ToListAsync();
+                IEnumerable<Workout> entities = await context.Set<Workout>().Include(e => e.Exercises).ToListAsync();
                 return entities;
             }
         }
