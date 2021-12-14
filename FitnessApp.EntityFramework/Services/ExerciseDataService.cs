@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FitnessApp.EntityFramework.Services
 {
-    // Hier werden die Methoden die sich auf Workout beziehen konkretisiert.
+    // Hier werden die Methoden die sich auf Exercise beziehen konkretisiert.
     public class ExerciseDataService : IExerciseService
     {
         private readonly FitnessAppDbContextFactory _contextFactory;
