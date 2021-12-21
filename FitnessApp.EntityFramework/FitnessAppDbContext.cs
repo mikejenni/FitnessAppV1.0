@@ -12,6 +12,7 @@ namespace FitnessApp.EntityFramework
     {
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<History> Histories { get; set; }
         public FitnessAppDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

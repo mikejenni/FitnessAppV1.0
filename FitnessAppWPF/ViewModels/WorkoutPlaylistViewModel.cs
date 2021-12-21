@@ -21,7 +21,7 @@ namespace FitnessAppWPF.ViewModels
         public ObservableCollection<Exercise> UpcomingExercises
         {
             get { return _upcomingExercises; }
-            set 
+            set
             {
                 _upcomingExercises = value;
                 OnPropertyChanged(nameof(UpcomingExercises));
@@ -46,7 +46,7 @@ namespace FitnessAppWPF.ViewModels
         public Workout Workout
         {
             get { return _workout; }
-            set 
+            set
             {
                 _workout = value;
                 OnPropertyChanged(nameof(Workout));
@@ -58,8 +58,8 @@ namespace FitnessAppWPF.ViewModels
         public Exercise ActiveExercise
         {
             get { return _activeExercise; }
-            set 
-            { 
+            set
+            {
                 _activeExercise = value;
                 OnPropertyChanged(nameof(ActiveExercise));
             }
@@ -69,8 +69,8 @@ namespace FitnessAppWPF.ViewModels
         public int ActiveRound
         {
             get { return _activeRound; }
-            set 
-            { 
+            set
+            {
                 _activeRound = value;
                 OnPropertyChanged(nameof(ActiveRound));
             }
@@ -80,8 +80,8 @@ namespace FitnessAppWPF.ViewModels
         public int TotalRound
         {
             get { return _totalRound; }
-            set 
-            { 
+            set
+            {
                 _totalRound = value;
                 OnPropertyChanged(nameof(TotalRound));
             }
@@ -92,8 +92,8 @@ namespace FitnessAppWPF.ViewModels
         public string TrainingTarget
         {
             get { return _trainingTarget; }
-            set 
-            { 
+            set
+            {
                 _trainingTarget = value;
                 OnPropertyChanged(nameof(TrainingTarget));
             }
@@ -104,17 +104,19 @@ namespace FitnessAppWPF.ViewModels
         public string ElapsedTrainingTime
         {
             get { return _elapsedTrainingTime; }
-            set 
-            { 
+            set
+            {
                 _elapsedTrainingTime = value;
                 OnPropertyChanged(nameof(ElapsedTrainingTime));
             }
         }
 
         public Stopwatch ElapsedTrainingTimer { get; set; }
+        public Stopwatch ExerciseTimer { get; set; }
         public ICommand StartWorkoutCommand { get; }
         public ICommand NextExerciseCommand { get; }
         public ICommand PreviousExerciseCommand { get; }
+        public ICommand StopWorkoutCommand { get; }
 
 
         public Timer StopWatchTimer = new Timer { Interval = 1000, AutoReset = true };
@@ -126,30 +128,64 @@ namespace FitnessAppWPF.ViewModels
             Workout = workoutStore.WorkoutPlaylist;
             ActiveExercise = Workout.Exercises.FirstOrDefault();
             TotalRound = Workout.Exercises.Count(e => e.CountAsRound == true);
-            TrainingTarget = ActiveExercise.TrainingTarget == Enums.TrainingTarget.Reps ? $"{ActiveExercise.Reps}" : TimeSpan.FromSeconds(ActiveExercise.Time).ToString(@"hh\:mm\:ss");
+
             StopWatchTimer.Elapsed += _stopWatchTimer_Elapsed;
             StartWorkoutCommand = new StartWorkoutCommand(this);
-            ActiveExerciseTimer = ActiveExercise.TrainingTarget == Enums.TrainingTarget.Time ? new Timer { Interval = ActiveExercise.Time * 1000, AutoReset = false } : null;
-            UpcomingExercises =  new ObservableCollection<Exercise>(Workout.Exercises.Skip(1));
+            SetTrainingTarget();
+            UpcomingExercises = new ObservableCollection<Exercise>(Workout.Exercises.Skip(1));
             PreviousExercises = new ObservableCollection<Exercise>();
             NextExerciseCommand = new NextExerciseCommand(this);
             PreviousExerciseCommand = new PreviousExerciseCommand(this);
             ActiveRound = 1;
+            StopWorkoutCommand = new StopWorkoutCommand(this);
 
         }
 
         private void _stopWatchTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+
             ElapsedTrainingTime = ElapsedTrainingTimer.Elapsed.ToString(@"hh\:mm\:ss");
             if (ActiveExercise.TrainingTarget == Enums.TrainingTarget.Time)
             {
-                TrainingTarget = (TimeSpan.FromSeconds(ActiveExercise.Time) - ElapsedTrainingTimer.Elapsed).ToString(@"hh\:mm\:ss");
+                TimeSpan remainingTime = TimeSpan.FromSeconds(ActiveExercise.Time) - ExerciseTimer.Elapsed;
+                TrainingTarget = remainingTime.ToString(@"hh\:mm\:ss");
+
+                if (remainingTime.TotalSeconds < 0)
+                {
+                    if (UpcomingExercises.Count > 0)
+                    {
+                        App.Current.Dispatcher.Invoke((Action)
+                       delegate
+                       {
+                           NextExerciseCommand.Execute(null);
+                       });
+                    }
+                    else
+                    {
+                        App.Current.Dispatcher.Invoke((Action)
+                       delegate
+                       {
+                           StopWorkoutCommand.Execute(null);
+                       });
+                    }
+                   
+                }
             }
         }
         public void CheckLists()
         {
             OnPropertyChanged(nameof(UpcomingExercises));
             OnPropertyChanged(nameof(PreviousExercises));
+        }
+        public void SetTrainingTarget()
+        {
+            ActiveExerciseTimer = ActiveExercise.TrainingTarget == Enums.TrainingTarget.Time ? new Timer { Interval = ActiveExercise.Time * 1000, AutoReset = false } : null;
+            TrainingTarget = ActiveExercise.TrainingTarget == Enums.TrainingTarget.Reps ? $"{ActiveExercise.Reps}" : TimeSpan.FromSeconds(ActiveExercise.Time).ToString(@"hh\:mm\:ss");
+
+            if (ActiveExercise.TrainingTarget == Enums.TrainingTarget.Time)
+            {
+                ExerciseTimer = Stopwatch.StartNew();
+            }
         }
 
     }

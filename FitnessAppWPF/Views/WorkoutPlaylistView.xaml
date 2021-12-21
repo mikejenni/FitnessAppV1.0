@@ -79,7 +79,7 @@
             <Button Content="Next" Command="{Binding NextExerciseCommand}"/>
             <Button Content="Previous" Command="{Binding PreviousExerciseCommand}"/>
             <Button Content="Start / pause" Command="{Binding StartWorkoutCommand}"/>
-            <Button Content="Stop"/>
+            <Button Content="Stop" Command="{Binding StopWorkoutCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

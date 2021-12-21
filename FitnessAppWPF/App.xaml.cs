@@ -52,6 +52,7 @@ namespace FitnessAppWPF
 
                 services.AddSingleton<IExerciseService, ExerciseDataService>();
                 services.AddSingleton<IWorkoutService, WorkoutDataService>();
+                services.AddSingleton<IHistoryService, HistoryDataService>();
 
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<ModalNavigationStore>();
@@ -60,6 +61,7 @@ namespace FitnessAppWPF
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<WorkoutStore>();
                 services.AddSingleton<ExerciseStore>();
+                services.AddSingleton<HistoryStore>();
 
                 services.AddTransient<MainTitleWorkoutsViewModel>(CreateMainTitleWorkoutsViewModel);
                 services.AddTransient<ExerciseMainViewModel>(CreateMainTitleExercisesViewModel);

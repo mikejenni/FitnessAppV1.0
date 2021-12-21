@@ -16,17 +16,19 @@ namespace FitnessAppWPF.Commands
             if (_workoutPlaylistViewModel.ElapsedTrainingTimer != null && _workoutPlaylistViewModel.ElapsedTrainingTimer.IsRunning)
             {
                 _workoutPlaylistViewModel.ElapsedTrainingTimer.Stop();
+                _workoutPlaylistViewModel.ExerciseTimer.Stop();
                 return;
             }
             if(_workoutPlaylistViewModel.ElapsedTrainingTimer != null && _workoutPlaylistViewModel.ElapsedTrainingTimer.ElapsedMilliseconds > 0)
             {
                 _workoutPlaylistViewModel.ElapsedTrainingTimer.Start();
+                _workoutPlaylistViewModel.ExerciseTimer.Start();
                 return;
             }
 
             _workoutPlaylistViewModel.ElapsedTrainingTimer = Stopwatch.StartNew();
             _workoutPlaylistViewModel.StopWatchTimer.Enabled = true;
-            _workoutPlaylistViewModel.StopWatchTimer.Start();
+            _workoutPlaylistViewModel.StopWatchTimer.Start();            
         }
 
         private readonly WorkoutPlaylistViewModel _workoutPlaylistViewModel;

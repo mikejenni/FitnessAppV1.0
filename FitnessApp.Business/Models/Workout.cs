@@ -19,6 +19,7 @@ namespace FitnessApp.Business.Models
 
 
         public List<Exercise> Exercises { get; set; } = new List<Exercise>();
+        public ICollection<History> Histories { get; set; }
 
         // public virtual ICollection<Exercise> Exercises { get; set; }
 

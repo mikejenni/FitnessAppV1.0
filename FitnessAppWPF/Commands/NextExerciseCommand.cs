@@ -13,10 +13,11 @@ namespace FitnessAppWPF.Commands
         public override void Execute(object parameter)
         {
             _workoutPlayListViewModel.PreviousExercises.Add(_workoutPlayListViewModel.ActiveExercise);
-            _workoutPlayListViewModel.ActiveExercise = _workoutPlayListViewModel.UpcomingExercises.First();
+            _workoutPlayListViewModel.ActiveExercise = _workoutPlayListViewModel.UpcomingExercises?.First();
             _workoutPlayListViewModel.UpcomingExercises.RemoveAt(0);
-            _workoutPlayListViewModel.CheckLists();
             IncreaseRoundNumber();
+            _workoutPlayListViewModel.SetTrainingTarget();
+            _workoutPlayListViewModel.CheckLists();
         }
 
         public override bool CanExecute(object parameter)
